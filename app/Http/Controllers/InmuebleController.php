@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Inmueble;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+// use Illuminate\Support\Facades\Storage;
 
 class InmuebleController extends Controller
 {
+
     // Todos los inmuebles
     public function index()
     {
@@ -34,6 +37,7 @@ class InmuebleController extends Controller
     {
         $camposFormulario = $request->validate([
             'titulo' => ['required', 'min:10'],
+            'imagen' => 'image',
             'etiquetas' => 'required',
             'descripcion' => ['required', 'min:50'],
             'precio' => ['required', 'numeric'],
@@ -42,6 +46,7 @@ class InmuebleController extends Controller
         ], [
             'titulo.required' => 'El titulo es obligatorio',
             'titulo.min' => 'El titulo debe tener minimo 10 caracteres',
+            'imagen.image' => 'El tipo de archivo debe ser una imagen',
             'etiquetas.required' => 'Las etiquetas son obligatorias',
             'descripcion.required' => 'La descripción es obligatoria',
             'descripcion.min' => 'La descripción debe tener minimo 50 caracteres',
@@ -51,6 +56,10 @@ class InmuebleController extends Controller
             'contacto.required' => 'El email es obligatorio',
             'contacto.email' => 'Debe ser un email válido',
         ]);
+
+        if ($request->hasFile('imagen')) {
+            $camposFormulario['imagen'] = $request->file('imagen')->store('imagenes', 'public');
+        }
 
         $camposFormulario['user_id'] = auth()->id();
 
@@ -75,6 +84,7 @@ class InmuebleController extends Controller
 
         $camposFormulario = $request->validate([
             'titulo' => ['required', 'min:10'],
+            'imagen' => 'image',
             'etiquetas' => 'required',
             'descripcion' => ['required', 'min:50'],
             'precio' => ['required', 'numeric'],
@@ -83,6 +93,7 @@ class InmuebleController extends Controller
         ], [
             'titulo.required' => 'El titulo es obligatorio',
             'titulo.min' => 'El titulo debe tener minimo 10 caracteres',
+            'imagen.image' => 'El tipo de archivo debe ser una imagen',
             'etiquetas.required' => 'Las etiquetas son obligatorias',
             'descripcion.required' => 'La descripción es obligatoria',
             'descripcion.min' => 'La descripción debe tener minimo 50 caracteres',
@@ -92,6 +103,10 @@ class InmuebleController extends Controller
             'contacto.required' => 'El email es obligatorio',
             'contacto.email' => 'Debe ser un email válido'
         ]);
+
+        if ($request->hasFile('imagen')) {
+            $camposFormulario['imagen'] = $request->file('imagen')->store('imagenes', 'public');
+        }
 
         $inmueble->update($camposFormulario);
 
@@ -110,7 +125,7 @@ class InmuebleController extends Controller
         return redirect('/')->with('mensaje', 'Anuncio eliminado exitosamente');
     }
 
-    // Gestionar Anuncios
+    /* Gestionar Anuncios*/
     public function gestion()
     {
         return view('inmuebles.gestion', ['inmuebles' => auth()->user()->inmuebles()->get()]);

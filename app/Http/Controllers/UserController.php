@@ -18,20 +18,21 @@ class UserController extends Controller
     {
         $camposFormulario = $request->validate([
             'name' => ['required', 'min:3'],
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', 'unique:users,email'],
             'password' => 'required|confirmed|min:6'
         ], [
             'name.required' => 'El nombre es obligatorio',
             'name.min' => 'El nombre debe tener minimo 3 caracteres',
             'email.required' => 'El email es obligatorio',
             'email.email' => 'Debe ser un email válido',
+            'email.unique' => 'Este email ya está siendo usado por una cuenta',
             'password.required' => 'El password es obligatorio',
             'password.confirmed' => 'Los passwords deben coincidir',
             'password.min' => 'El password debe tener minimo 6 caracteres'
         ]);
 
-        //Encriptar Password
-        $camposFormulario['password'] = bcrypt($camposFormulario['password']);
+        /* Encriptar Password
+        $camposFormulario['password'] = bcrypt($camposFormulario['password']); */
 
         // Crear Usuario
         $user = User::create($camposFormulario);

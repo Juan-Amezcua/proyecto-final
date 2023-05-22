@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Inmueble extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    //protected $fillable = ['titulo', 'etiquetas', 'descripcion', 'precio', 'ubicacion', 'contacto'];
+    // protected $fillable = ['titulo', 'etiquetas', 'descripcion', 'precio', 'ubicacion', 'contacto', 'imagen'];
 
     public function scopeFilter($query, array $filters)
     {

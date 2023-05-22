@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use App\Models\Inmueble;
+use App\Models\Role;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,8 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
         $user = User::factory()->create([
             'name' => 'Juan Amezcua',
             'email' => 'juan@test.com'
@@ -24,6 +23,20 @@ class DatabaseSeeder extends Seeder
         Inmueble::factory(6)->create([
             'user_id' => $user->id
         ]);
+
+        User::factory(4)->create();
+
+        $roles = ['creador', 'contribuidor', 'administrador'];
+        foreach ($roles as $role) {
+            Role::create(['nombre' => $role]);
+        }
+
+        foreach (User::all() as $user) {
+            foreach (Role::all() as $role) {
+                $user->roles()->attach($role->id);
+            }
+        }
+
 
         /* Inmueble::create([
             'titulo' => 'Departamento en renta',

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Attribute;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -42,9 +44,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // Relación con Inmuebles
+    // Relación con Inmuebles (uno a muchos)
     public function inmuebles()
     {
         return $this->hasMany(Inmueble::class, 'user_id');
+    }
+
+    /* Relación con roles (muchos a muchos) */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class)->withTimestamps()->withPivot('active');
+    }
+
+    // Mutator para encriptar el password
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
     }
 }

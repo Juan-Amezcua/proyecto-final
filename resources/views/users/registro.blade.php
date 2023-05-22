@@ -14,7 +14,7 @@
                     Nombre
                 </label>
                 <input type="text" class="border border-gray-200 rounded p-2 w-full" name="name"
-                    placeholder="Minimo 3 caracteres" value="{{ old('name') }}" />
+                    placeholder="Minimo 3 caracteres" value="{{ old('name') }}" required />
                 @error('name')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -23,7 +23,7 @@
             <div class="mb-6">
                 <label for="email" class="inline-block text-lg mb-2">Email</label>
                 <input type="email" class="border border-gray-200 rounded p-2 w-full" name="email"
-                    placeholder="Dirección email válida" value="{{ old('email') }}" />
+                    placeholder="Dirección email válida" value="{{ old('email') }}" required />
                 @error('email')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -34,7 +34,7 @@
                     Contraseña
                 </label>
                 <input type="password" class="border border-gray-200 rounded p-2 w-full" name="password"
-                    placeholder="Minimo 6 caracteres" value="{{ old('password') }}" />
+                    placeholder="Minimo 6 caracteres" value="{{ old('password') }}" required />
                 @error('password')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
@@ -45,7 +45,7 @@
                     Confirmar contraseña
                 </label>
                 <input type="password" class="border border-gray-200 rounded p-2 w-full" name="password_confirmation"
-                    value="{{ old('password_confirmation ') }}" />
+                    value="{{ old('password_confirmation ') }}" required />
                 @error('password_confirmation')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror

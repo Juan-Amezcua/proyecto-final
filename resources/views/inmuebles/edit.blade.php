@@ -21,6 +21,17 @@
             </div>
 
             <div class="mb-6">
+                <label for="imagen" class="inline-block text-lg mb-2">Imagen de muestra</label>
+                <input type="file" class="border border-gray-200 rounded p-2 w-full" name="imagen" />
+                <img class="w-48 mr-6 mb-6"
+                    src="{{ $inmueble->imagen ? asset('storage/' . $inmueble->imagen) : asset('/imagenes/logo.png') }}"
+                    alt="" />
+                @error('imagen')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="mb-6">
                 <label for="etiquetas" class="inline-block text-lg mb-2">
                     Etiquetas (Separadas por coma)
                 </label>

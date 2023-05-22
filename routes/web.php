@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\InmuebleController;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EnviarCorreo;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +20,21 @@ use App\Http\Controllers\InmuebleController;
 */
 
 // Todos los inmuebles
-Route::get('/', [InmuebleController::class, 'index']);
+Route::get('/', [InmuebleController::class, 'index'])->name('home');
+
+// Formulario correo
+Route::get('/correo', function () {
+    return view('correo');
+});
+
+// Enviar correo
+Route::post('/enviar-correo', function () {
+    Mail::to(request()->email)->send(new EnviarCorreo(request()->mensaje));
+    return redirect()->route('home')->with('mensaje', 'Correo enviado con éxito');
+})->name('enviar-correo');
+
+// Exportar PDF
+Route::get('/export_user_pdf', [InmuebleController::class], 'export_user_pdf')->name('export_user_pdf');
 
 // Mostrar formulario para crear nuevo
 Route::get('/inmuebles/create', [InmuebleController::class, 'create'])->middleware('auth');

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8" />
@@ -39,6 +39,10 @@
                 <li>
                     <a href="/inmuebles/gestion" class="hover:text-laravel"><i class="fa-solid fa-gear"></i>
                         Gestionar Anuncios</a>
+                </li>
+                <li>
+                    <a href="/correo" class="hover:text-laravel"><i class="fa-solid fa-envelope"></i>
+                        Correo personalizado</a>
                 </li>
                 <li>
                     <form class="inline" method="POST" action="/salir">
