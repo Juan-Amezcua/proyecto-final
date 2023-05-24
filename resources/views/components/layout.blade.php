@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -41,6 +42,14 @@
                         Gestionar Anuncios</a>
                 </li>
                 <li>
+                    <form class="inline" method="POST" name="pago" action='paypal/pago'>
+                        @csrf
+                        <button type="submit">
+                            <i class="fa-solid fa-credit-card"></i> Reserva tu lugar ($3000.00)
+                        </button>
+                    </form>
+                </li>
+                <li>
                     <a href="/correo" class="hover:text-laravel"><i class="fa-solid fa-envelope"></i>
                         Correo personalizado</a>
                 </li>
@@ -48,17 +57,23 @@
                     <form class="inline" method="POST" action="/salir">
                         @csrf
                         <button type="submit">
-                            <i class="fa-solid fa-door-closed"></i>Salir
+                            <i class="fa-solid fa-door-closed"></i> Salir
                         </button>
                     </form>
                 </li>
             @else
                 <li>
-                    <a href="/registro" class="hover:text-laravel"><i class="fa-solid fa-user-plus"></i> Registrarse</a>
+                    <a href="/registro" class="hover:text-laravel"><i class="fa-solid fa-user-plus"></i> Registrate con
+                        correo</a>
+                </li>
+                <li>
+                    <a href="/auth/github/redirect" class="hover:text-laravel"><i class="fa-solid fa-user-plus"></i>
+                        Continuar con
+                        GitHub</a>
                 </li>
                 <li>
                     <a href="/entrar" class="hover:text-laravel"><i class="fa-solid fa-arrow-right-to-bracket"></i>
-                        Entrar</a>
+                        Entrar con correo</a>
                 </li>
             @endauth
         </ul>

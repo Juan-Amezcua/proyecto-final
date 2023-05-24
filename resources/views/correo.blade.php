@@ -7,7 +7,7 @@
             <p class="mb-4">Todos los campos son obligatorios</p>
         </header>
 
-        <form method="POST" action="/validad-correo">
+        <form method="POST" action="/enviar-correo">
             @csrf
             <div class="mb-6">
                 <label for="email" class="inline-block text-lg mb-2">Email</label>

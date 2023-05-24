@@ -1,12 +1,15 @@
 <?php
 
+use App\Http\Controllers\GithubUserController;
+use App\Http\Controllers\CorreoController;
+use App\Models\User;
 use App\Models\Inmueble;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\InmuebleController;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\EnviarCorreo;
+use App\Http\Controllers\PaypalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,21 +25,26 @@ use App\Mail\EnviarCorreo;
 // Todos los inmuebles
 Route::get('/', [InmuebleController::class, 'index'])->name('home');
 
-// Formulario correo
-Route::get('/correo', function () {
-    return view('correo');
-});
+// Mostrar formulario para crear nuevo correo
+Route::get('/correo', [CorreoController::class, 'create'])->middleware('auth');
 
 // Enviar correo
-Route::post('/enviar-correo', function () {
-    Mail::to(request()->email)->send(new EnviarCorreo(request()->mensaje));
-    return redirect()->route('home')->with('mensaje', 'Correo enviado con éxito');
-})->name('enviar-correo');
+Route::post('/enviar-correo', [CorreoController::class, 'enviar'])->name('enviar-correo');
 
-// Exportar PDF
-Route::get('/export_user_pdf', [InmuebleController::class], 'export_user_pdf')->name('export_user_pdf');
+// Autenticación mediante credenciales de terceros (GitHub) - Redirección
+Route::get('/auth/github/redirect', [GithubUserController::class, 'redirectToProvider']);
 
-// Mostrar formulario para crear nuevo
+// Autenticación mediante credenciales de terceros (GitHub) - Manejo
+Route::get('/auth/github/callback', [GithubUserController::class, 'handleProviderCallback']);
+
+// Sistema de pago Paypal
+Route::post('paypal/pago', [PaypalController::class, 'pago'])->name('paypal.pago');
+
+Route::get('paypal/exito', [PaypalController::class, 'exito'])->name('paypal.exito');
+
+Route::get('paypal/cancelado', [PaypalController::class, 'cancelado'])->name('paypal.cancelado');
+
+// Mostrar formulario para crear nuevo anuncio
 Route::get('/inmuebles/create', [InmuebleController::class, 'create'])->middleware('auth');
 
 // Almacenar información del anuncio
