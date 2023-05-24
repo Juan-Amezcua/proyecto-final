@@ -1,3 +1,9 @@
+## Puntos extras que se desarrollaron
+
+- Relación muchos a muchos con información particular a la relación (información adicional en tabla pivote).
+- Autenticación mediante credenciales de terceros (github).
+- Implementar sistema de pago (Paypal).
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
